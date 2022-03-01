@@ -1,0 +1,22 @@
+{{- if $.Values.github.appId }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}-startup-script
+data:
+  generate.rb : |
+    require 'openssl'
+    require 'jwt'
+
+    private_pem = File.read("/var/run/secrets/git/app_key")
+    private_key = OpenSSL::PKey::RSA.new(private_pem)
+
+    payload = {
+      iat: Time.now.to_i - 60,
+      exp: Time.now.to_i + 60,
+      iss: "{{ $.Values.github.appId | toString }}"
+    }
+
+    jwt = JWT.encode(payload, private_key, "RS256")
+    puts jwt
+{{- end }}

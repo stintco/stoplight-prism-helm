@@ -1,0 +1,18 @@
+apiVersion: v2
+name: stoplight-prism
+description: A Helm chart to deploy StopLight Prism for a given microservice specs
+version: 1.0.0
+appVersion: 4.8.0
+keywords:
+  - mock
+  - api
+  - rest
+  - OA3
+home: https://stoplight.io/open-source/prism/
+icon: https://github.com/stoplightio/prism/raw/master/examples/readme-header.svg
+sources:
+  - https://github.com/stintco/stoplight-prism-helm
+  - https://github.com/stoplightio/prism
+maintainers:
+  - name: acolombier
+    email: antoine.colombier@stint.co

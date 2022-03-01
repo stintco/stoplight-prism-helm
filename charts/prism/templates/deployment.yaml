@@ -1,0 +1,124 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}
+  annotations:
+    {{- toYaml $.Values.deployment.annotations | nindent 12 }}
+  labels:
+    app.kubernetes.io/name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}
+    app.kubernetes.io/instance: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}-{{ $.Chart.Version }}
+    app.kubernetes.io/version: "{{ $.Chart.Version }}"
+    app.kubernetes.io/part-of: prism-{{ $.Values.service.mode }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}
+    spec:
+      volumes:
+      - name: spec
+        emptyDir: {}
+      {{- if $.Values.github.secret.name }}
+      - name: git
+        secret:
+          secretName: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}
+          items:
+          - key: key
+            path: app_key
+      - name: script
+        configMap:
+          name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}-startup-script
+      {{- end }}
+      initContainers:
+      - name: fetch-spec
+        image: ruby:slim
+        command: ['/bin/sh', '-c', '-e']
+        args:
+          - |
+            apt update && apt install -y curl jq git
+            {{- if $.Values.github.appId }}
+            gem install jwt
+            git clone --depth 1 --no-tags -b "{{ $.Values.service.branch }}" "https://x-access-token:$(curl -s -X POST -H "Authorization: Bearer $(ruby /opt/prism/generate.rb)" -H "Accept: application/vnd.github.v3+json" https://api.github.com/app/installations/{{ $.Values.github.installId | toString  }}/access_tokens | jq .token -r)@{{ $.Values.service.origin }}" spec
+            {{- else }}
+            git clone --depth 1 --no-tags -b {{ $.Values.service.branch }} https://{{ $.Values.service.origin }} spec
+            {{- end }}
+            cd spec && git --no-pager show origin/{{ $.Values.service.branch }}:{{ $.Values.service.specPath }} > /app/spec/openapi.yaml
+        volumeMounts:
+          {{- if $.Values.github.appId }}
+          - mountPath: /var/run/secrets/git/
+            name: git
+          - mountPath: /opt/prism/
+            name: script
+          {{- end }}
+          - mountPath: /app/spec/
+            name: spec
+      containers:
+        - name: prism
+          image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
+          args:
+            {{- if eq $.Values.service.mode "proxy" }}
+            - proxy
+            - /app/spec/openapi.yaml
+            - {{ $.Values.service.upstream }}
+            {{- else }}
+            - mock
+            - /app/spec/openapi.yaml
+            {{- end }}
+            - -h
+            - "0.0.0.0"
+          ports:
+            - containerPort: 4010
+              protocol: TCP
+          {{- if $.Values.service.probe }}
+          readinessProbe:
+            httpGet:
+              path: {{ $.Values.service.probe }}
+              port: 4010
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: {{ $.Values.service.probe }}
+              port: 4010
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 5
+          startupProbe:
+            httpGet:
+              path: {{ $.Values.service.probe }}
+              port: 4010
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 5
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: spec
+              mountPath: /app/spec/
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 5
+      securityContext: {}
+       {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0%
+      maxSurge: 100%

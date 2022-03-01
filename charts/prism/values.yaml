@@ -1,0 +1,45 @@
+image:
+  repository: stoplight/prism
+  tag: "4"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+deployment:
+  annotations: {}
+
+resources:
+  limits:
+    cpu: "150m"
+    memory: "250Mi"
+  requests:
+    cpu: "50m"
+    memory: "100Mi"
+
+github:
+  appId:
+  installId:
+  secret:
+    type:
+    backend:
+    name:
+    role:
+    region:
+
+service:
+  mode: mock # Either mock or proxy
+  upstream: # required if using proxy
+  name: service
+  origin:
+  specPath: openapi.yaml
+  branch: master
+  probe:
+
+ingress:
+  host: service.internal
+  # If `true`, an Ingress is created
+  enabled: false
+  # The name of the Ingress Class associated with this ingress
+  ingressClassName: ""
+  annotations: {}
+  labels: {}

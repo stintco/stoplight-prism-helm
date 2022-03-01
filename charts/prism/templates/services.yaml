@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}
+  labels:
+    app.kubernetes.io/name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}
+    app.kubernetes.io/instance: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}-{{ $.Chart.Version }}
+    app.kubernetes.io/version: "{{ $.Chart.Version }}"
+    app.kubernetes.io/part-of: prism-{{ $.Values.service.mode }}
+spec:
+  selector:
+    app.kubernetes.io/name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 4010
+    targetPort: 4010
+    name: http
