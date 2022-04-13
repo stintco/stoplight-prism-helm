@@ -26,7 +26,8 @@ spec:
   - host: {{ $.Values.ingress.host }}
     http:
       paths:
-        - pathType: ImplementationSpecific
+        - path: {{ $ingress.path }}
+          pathType: ImplementationSpecific
           backend:
             service:
               name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}

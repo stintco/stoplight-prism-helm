@@ -3,9 +3,31 @@ entries:
   stoplight-prism:
   - apiVersion: v2
     appVersion: 4.8.0
-    created: "2022-04-13T09:37:51.641711637+02:00"
+    created: "2022-04-13T12:54:59.997351205+02:00"
     description: A Helm chart to deploy StopLight Prism for a given microservice specs
-    digest: f2d0761b289fd3aa07809d6864439ffda05d26aeb6b3e1d67caf1ee99c9d41fc
+    digest: 2255966070eea49f5493e7174abaea9a42f2c805ba14c713c8f06319451e0be3
+    home: https://stoplight.io/open-source/prism/
+    icon: https://github.com/stoplightio/prism/raw/master/examples/readme-header.svg
+    keywords:
+    - mock
+    - api
+    - rest
+    - OA3
+    maintainers:
+    - email: antoine.colombier@stint.co
+      name: acolombier
+    name: stoplight-prism
+    sources:
+    - https://github.com/stintco/stoplight-prism-helm
+    - https://github.com/stoplightio/prism
+    urls:
+    - stoplight-prism-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
+    appVersion: 4.8.0
+    created: "2022-04-13T12:54:59.997019129+02:00"
+    description: A Helm chart to deploy StopLight Prism for a given microservice specs
+    digest: f675d9f07e8239b0182ad8a3b432a6f4bb279dd3388ab24d3799ce4e2271f144
     home: https://stoplight.io/open-source/prism/
     icon: https://github.com/stoplightio/prism/raw/master/examples/readme-header.svg
     keywords:
@@ -25,9 +47,9 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 4.8.0
-    created: "2022-04-13T09:37:51.641394473+02:00"
+    created: "2022-04-13T12:54:59.996701208+02:00"
     description: A Helm chart to deploy StopLight Prism for a given microservice specs
-    digest: d53ffa18969d77b9880b707ef534a38300f6d2ba450afccc193315bbe011e2f0
+    digest: a8c6ed1c1d538b167d57a6bb052a8fc2d6ebaa21dd32402e13b9f9b2bbb2f98f
     home: https://stoplight.io/open-source/prism/
     icon: https://github.com/stoplightio/prism/raw/master/examples/readme-header.svg
     keywords:
@@ -45,4 +67,4 @@ entries:
     urls:
     - stoplight-prism-1.0.0.tgz
     version: 1.0.0
-generated: "2022-04-13T09:37:51.640943003+02:00"
+generated: "2022-04-13T12:54:59.996236286+02:00"
