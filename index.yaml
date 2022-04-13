@@ -3,9 +3,31 @@ entries:
   stoplight-prism:
   - apiVersion: v2
     appVersion: 4.8.0
-    created: "2022-03-01T18:35:03.339927607Z"
+    created: "2022-04-13T09:37:51.641711637+02:00"
     description: A Helm chart to deploy StopLight Prism for a given microservice specs
-    digest: a8c6ed1c1d538b167d57a6bb052a8fc2d6ebaa21dd32402e13b9f9b2bbb2f98f
+    digest: f2d0761b289fd3aa07809d6864439ffda05d26aeb6b3e1d67caf1ee99c9d41fc
+    home: https://stoplight.io/open-source/prism/
+    icon: https://github.com/stoplightio/prism/raw/master/examples/readme-header.svg
+    keywords:
+    - mock
+    - api
+    - rest
+    - OA3
+    maintainers:
+    - email: antoine.colombier@stint.co
+      name: acolombier
+    name: stoplight-prism
+    sources:
+    - https://github.com/stintco/stoplight-prism-helm
+    - https://github.com/stoplightio/prism
+    urls:
+    - stoplight-prism-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 4.8.0
+    created: "2022-04-13T09:37:51.641394473+02:00"
+    description: A Helm chart to deploy StopLight Prism for a given microservice specs
+    digest: d53ffa18969d77b9880b707ef534a38300f6d2ba450afccc193315bbe011e2f0
     home: https://stoplight.io/open-source/prism/
     icon: https://github.com/stoplightio/prism/raw/master/examples/readme-header.svg
     keywords:
@@ -23,4 +45,4 @@ entries:
     urls:
     - stoplight-prism-1.0.0.tgz
     version: 1.0.0
-generated: "2022-03-01T18:35:03.33887295Z"
+generated: "2022-04-13T09:37:51.640943003+02:00"
