@@ -1,3 +1,13 @@
+{{- if $.Values.service.openapi.content }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prism-{{ $.Values.service.mode }}-{{ $.Values.service.name }}-openapi
+data:
+  openapi.yaml: |
+    {{- $.Values.service.openapi.content | nindent 4 }}
+---
+{{- end }}
 {{- if $.Values.github.appId }}
 apiVersion: v1
 kind: ConfigMap

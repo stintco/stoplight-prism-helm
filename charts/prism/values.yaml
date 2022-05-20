@@ -26,14 +26,21 @@ github:
     role:
     region:
 
+
 service:
   mode: mock # Either mock or proxy
   upstream: # required if using proxy
   name: service
+  probe:
+
+  # OpenAPI to use
+  openapi:
+    content: ""
+
+  # or git configuration to auto fetch
   origin:
   specPath: openapi.yaml
   branch: master
-  probe:
 
 ingress:
   host: service.internal

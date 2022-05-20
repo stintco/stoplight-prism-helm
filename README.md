@@ -6,6 +6,7 @@ This Helm chart provides an easy-2-go API mock or proxy using [Stoplight Prism](
 
 Currently, the Helm chart supports:
 
+- Spec as a local file (using `--set-file` or inline)
 - Publicly hosted spec on Git
 - Privately hosted spec on Github, using a Github App
     - Github App provided through [ExternalSecret](https://github.com/external-secrets/kubernetes-external-secrets)
@@ -32,7 +33,7 @@ $ helm repo add stint-opensource https://raw.githubusercontent.com/stintco/stopl
 
 | Version                       | Description                                                                                                                 | Suggestion                              |
 |-------------------------------|-----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
-| `v1.0.0-RC1` (_Stable_)        | This is the most stable release, however, it won't come with any support!                                                   | Recommended for any live product
+| `v1.0.0-RC4` (_Stable_)        | This is the most stable release, however, it won't come with any support!                                                   | Recommended for any live product
 | `main` (_Unstable_)           | This is the latest version of the library. It is likely to contain breaking changes as it grows!                            | Recommended for early development or PoC which are likely to take a certain time before being consider stable. **Make sure to use the stable tag once your project becomes stable!**
 | `v1.0.0` (**Unavailable yet**) | This version is scheduled to be released when the chart will be used widely and we have gained confidence on its stability. | -
 | \<branchName>                 | You can use any branch name.                                                                                                | When working on a fix or a new feature, this is the easier way to test your library within the project which is depending of this change.
@@ -50,6 +51,14 @@ Here is a complete example:
 ```console
 $ helm repo add stint-opensource https://raw.githubusercontent.com/stintco/stoplight-prism-helm/main/
 $ helm repo update
+# -- Using a spec file
+$ helm install my-service-mock stint-opensource/stoplight-prism --namespace my-namespace \
+    --create-namespace --wait --timeout 5m \
+    --set imagePullSecrets[0].name=docker-config-default \
+    --set service.name=my-service \
+    --set service.probe=/pets \
+    --set-file service.openapi.content=/path/to/my/swagger.yml \
+    --set ingress.host=service.internal
 # -- Using a public repo
 $ helm install my-service-mock stint-opensource/stoplight-prism --namespace my-namespace \
     --create-namespace --wait --timeout 5m \
@@ -108,10 +117,11 @@ $ helm uninstall my-service-mock
 | `service.mode`                | The Prism mode to use, either `mock` or `proxy`                                           | `mock`            |
 | `service.upstream`            | If using `proxy`, the upstream API endpoint, ignored otherwise.                           |                   |
 | `service.name`                | The service nickname                                                                      | `service`         |
+| `service.probe`               | The path can be `GET` on the API to probe readiness and liveness. Must return a status code < 400. DIsabled if not provided. _(Optional)_                                                                    |
+| `service.openapi.content`               | The inline content of the OpenAPI YAML spec to use. You can pass a local file using `set-file`. _(Optional)_                                                                    |
 | `service.origin`              | The Git remote address. **Only https is supported, but you need not to include `https://`**. This is because the access token will be injected before the domain.                                                                   |                 |
 | `service.specPath`            | The path to the OA3 spec                                                                  | `openapi.yaml`    |
 | `service.branch`              | The branch where to find it                                                               | `master`          |
-| `service.probe`               | The path can be `GET` on the API to probe readiness and liveness. Must return a status code < 400. DIsabled if not provided. _(Optional)_                                                                    |
 | `ingress.enabled`             | Whether or not to create an ingress. Will only create a service otherwise, which can be used for in-cluster mocking. | `false` |
 | `ingress.host`                | The ingress `host`. The TLS certificate must be available without explicit secret. You can set a wildcard to achieve this. | `service.internal` |
 | `ingress.ingressClassName`    | The ingress class name to use                                                             | `""`              |

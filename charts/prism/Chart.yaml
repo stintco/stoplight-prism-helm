@@ -1,7 +1,7 @@
 apiVersion: v2
 name: stoplight-prism
 description: A Helm chart to deploy StopLight Prism for a given microservice specs
-version: 1.0.2
+version: 1.0.3
 appVersion: 4.8.0
 keywords:
   - mock
