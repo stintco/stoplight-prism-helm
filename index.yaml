@@ -3,7 +3,29 @@ entries:
   stoplight-prism:
   - apiVersion: v2
     appVersion: 4.8.0
-    created: "2022-05-20T18:41:49.172052784+01:00"
+    created: "2022-05-24T18:09:47.988543903+01:00"
+    description: A Helm chart to deploy StopLight Prism for a given microservice specs
+    digest: 3f60925d9f0627c992e015d68610411991a52d9c80f07eb503b0ff9f3da1cc6c
+    home: https://stoplight.io/open-source/prism/
+    icon: https://github.com/stoplightio/prism/raw/master/examples/readme-header.svg
+    keywords:
+    - mock
+    - api
+    - rest
+    - OA3
+    maintainers:
+    - email: antoine.colombier@stint.co
+      name: acolombier
+    name: stoplight-prism
+    sources:
+    - https://github.com/stintco/stoplight-prism-helm
+    - https://github.com/stoplightio/prism
+    urls:
+    - stoplight-prism-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    appVersion: 4.8.0
+    created: "2022-05-24T18:09:47.988179208+01:00"
     description: A Helm chart to deploy StopLight Prism for a given microservice specs
     digest: b412189e027ed1d86bbb9b9b3f1057e38a138b63c5887f0d015c07446380e906
     home: https://stoplight.io/open-source/prism/
@@ -25,7 +47,7 @@ entries:
     version: 1.0.3
   - apiVersion: v2
     appVersion: 4.8.0
-    created: "2022-05-20T18:41:49.171684219+01:00"
+    created: "2022-05-24T18:09:47.987840922+01:00"
     description: A Helm chart to deploy StopLight Prism for a given microservice specs
     digest: 2255966070eea49f5493e7174abaea9a42f2c805ba14c713c8f06319451e0be3
     home: https://stoplight.io/open-source/prism/
@@ -47,7 +69,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 4.8.0
-    created: "2022-05-20T18:41:49.171265167+01:00"
+    created: "2022-05-24T18:09:47.987495417+01:00"
     description: A Helm chart to deploy StopLight Prism for a given microservice specs
     digest: f675d9f07e8239b0182ad8a3b432a6f4bb279dd3388ab24d3799ce4e2271f144
     home: https://stoplight.io/open-source/prism/
@@ -69,7 +91,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 4.8.0
-    created: "2022-05-20T18:41:49.170928639+01:00"
+    created: "2022-05-24T18:09:47.987165696+01:00"
     description: A Helm chart to deploy StopLight Prism for a given microservice specs
     digest: a8c6ed1c1d538b167d57a6bb052a8fc2d6ebaa21dd32402e13b9f9b2bbb2f98f
     home: https://stoplight.io/open-source/prism/
@@ -89,4 +111,4 @@ entries:
     urls:
     - stoplight-prism-1.0.0.tgz
     version: 1.0.0
-generated: "2022-05-20T18:41:49.170471109+01:00"
+generated: "2022-05-24T18:09:47.98592505+01:00"
